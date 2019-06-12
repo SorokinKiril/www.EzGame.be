@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="ezGame3.0" transaction-type="JTA">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>java:comp/env/jdbc/jsfdb</jta-data-source>
+		<class>be.ezgame.namedqueries.Queries</class>
+		<class>be.ezgame.model.Achievement</class>
+		<class>be.ezgame.model.Character</class>
+		<class>be.ezgame.model.CharacterAchievement</class>
+		<class>be.ezgame.model.CharacterInventory</class>
+		<class>be.ezgame.model.Classe</class>
+		<class>be.ezgame.model.Item</class>
+		<class>be.ezgame.model.ItemType</class>
+		<class>be.ezgame.model.Race</class>
+		<class>be.ezgame.model.Role</class>
+		<class>be.ezgame.model.SecretQuestion</class>
+		<class>be.ezgame.model.Title</class>
+		<class>be.ezgame.model.User</class>
+	</persistence-unit>
+</persistence>

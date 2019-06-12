@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/ressources/templates/template.xhtml">
+	<ui:define name="head">
+		<title>#{i18n['character.leaderboard']}</title>
+	</ui:define>
+	<ui:define name="content">
+		<div>
+			<h3 style="text-align: left;">#{i18n['character.leaderboard']}</h3>
+		</div>
+		<p:separator />
+		<p:dataTable id="checkboxDT"
+			style="width: 80%; margin-left: auto; margin-right: auto; text-align:center"
+			var="character" value="#{characterBean.leaderboard}"
+			rowIndexVar="index">
+			<f:facet name="header">
+				<h:outputText value="#{i18n['character.list']}" />
+			</f:facet>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{i18n['character.leaderboard']}" />
+				</f:facet>
+				<h:outputText value="#{index + 1}" />
+			</p:column>
+			<p:column headerText="#{i18n['character.image']}">
+
+				<p:graphicImage width="70px" height="100px"
+					url="#{character.characterImageLink}" />
+			</p:column>
+			<p:column headerText="#{i18n['character.name']}">
+				<h:outputText value="#{character.characterName}" />
+			</p:column>
+			<p:column headerText="#{i18n['character.gender']}">
+				<h:outputText rendered="#{ (character.characterGender) eq 'true' }"
+					value="#{i18n['character.male']}" />
+				<h:outputText rendered="#{ (character.characterGender) eq 'false' }"
+					value="#{i18n['character.female']}" />
+			</p:column>
+			<p:column headerText="#{i18n['character.classe']}">
+				<h:outputText value="#{character.classe.classeName}" />
+			</p:column>
+			<p:column headerText="#{i18n['character.level']}"
+				sortBy="#{character.characterLevel}">
+				<h:outputText value="#{character.characterLevel}" />
+			</p:column>
+			<p:column headerText="#{i18n['character.experience']}"
+				sortBy="#{character.characterExperience}">
+				<h:outputText value="#{character.characterExperience}" />
+			</p:column>
+			<p:column headerText="#{i18n['character.gold']}"
+				sortBy="#{character.characterGold}">
+				<h:outputText value="#{character.characterGold}" />
+			</p:column>
+			<p:column headerText="#{i18n['character.status']}">
+				<h:outputText rendered="#{ (character.characterStatus) eq 'false' }"
+					value="#{i18n['character.dead']}" />
+				<h:outputText rendered="#{ (character.characterStatus) eq 'true' }"
+					value="#{i18n['character.alive']}" />
+			</p:column>
+		</p:dataTable>
+	</ui:define>
+</ui:composition>

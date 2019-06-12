@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/dark-hive"
+	xmlns:shiro="http://shiro.apache.org/tags">
+
+	<div class="layout-footer">
+		<h:form>
+			<p:commandLink action="#{i18nBean.setLanguage('en')}" update="@all">
+				<p:graphicImage style="height:25px; width:50px;"
+					url="/ressources/img/en.png" />
+			</p:commandLink>
+	
+			<p:commandLink action="#{i18nBean.setLanguage('fr')}" update="@all">
+				<h:graphicImage style="height:25px; width:50px;"
+					url="/ressources/img/fr.png" />
+			</p:commandLink>
+		</h:form>
+	</div>
+</ui:composition>

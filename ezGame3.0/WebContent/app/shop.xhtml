@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/ressources/templates/template.xhtml">
+	<ui:define name="head">
+		<title>#{i18n['item.shop']}</title>
+	</ui:define>
+	<ui:define name="content">
+		<div>
+			<h3 style="text-align: left;">#{i18n['item.shop']}</h3>
+		</div>
+		<p:separator />
+		<ui:fragment rendered="#{role ne 3}">
+			<h:outputText value="#{i18n['general.acces_denied']}" />
+		</ui:fragment>
+		<ui:fragment rendered="#{role eq 3}">
+			<p:growl id="message" autoUpdate="false" showDetail="true"
+				severity="info,error" />
+			<h:form id="form">
+				<p:dataTable
+					style="width: 80%; margin-left: auto; margin-right: auto; text-align:center"
+					var="item" value="#{itemBean.listItem}">
+					<f:facet name="header">
+						<h:outputText value="#{i18n['item.list']}" />
+					</f:facet>
+
+					<p:column width="10%" headerText="#{i18n['item.name']}">
+						<h:outputText value="#{item.itemName}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['item.description']}">
+						<h:outputText value="#{item.itemDescription}" />
+					</p:column>
+
+					<p:column width="10%" headerText="#{i18n['item.type']}">
+						<h:outputText value="#{item.itemType.itemTypeName}" />
+					</p:column>
+
+					<p:column width="10%" headerText="#{i18n['item.price']}">
+						<h:outputText value="#{item.itemPrice}" />
+					</p:column>
+
+					<p:column width="10%">
+						<p:commandButton icon="fa fa-fw fa-edit" update="@form:itemDetail"
+							action="#{itemBean.calculateMaxQuantityBuyable}"
+							oncomplete="PF('dlg').show();"
+							rendered="#{itemBean.charSession ne 'null'}">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{itemBean.itemEdit}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:dialog id="itemDetail" header="#{itemBean.itemEdit.itemName}"
+					widgetVar="dlg" dynamic="true" closable="false" resizable="false"
+					showEffect="fade" hideEffect="fade">
+					<h:panelGroup>
+						<h:panelGrid columns="1">
+							<p:separator />
+							<h:outputLabel value="#{i18n['item.quantity']}" />
+							<p:spinner value="#{itemBean.quantity}" min="0"
+								max="#{itemBean.maxQuantityBuyable}">
+								<p:ajax update="totalGoldValue"
+									listener="#{itemBean.calculatetotalPrice()}" process="@this" />
+							</p:spinner>
+							<br />
+							<h:panelGrid columns="2">
+								<h:outputLabel value="#{i18n['item.shopcart_value']}" />
+								<h:outputLabel id="totalGoldValue"
+									value="#{itemBean.totalPrice}" />
+								<h:outputLabel value="#{i18n['character.gold']}" />
+								<h:outputLabel value="#{itemBean.charSession.characterGold}" />
+							</h:panelGrid>
+						</h:panelGrid>
+						<hr />
+						<h:panelGrid columns="2" style="width: 100%; text-align:center">
+							<p:commandButton value="#{i18n['general.submit']}"
+								icon="fa fa-check" actionListener="#{itemBean.buyItem}"
+								oncomplete="if(!args.validationFailed){updateForm();}"
+								update="message">
+							</p:commandButton>
+							<p:commandButton value="#{i18n['general.cancel']}"
+								icon="fa fa-close" action="#{itemBean.submitCancel}"
+								oncomplete="PF('dlg').hide();" update="@form" process="@this" />
+						</h:panelGrid>
+						<p:remoteCommand name="updateForm" process="@this" update="@form" />
+					</h:panelGroup>
+				</p:dialog>
+			</h:form>
+		</ui:fragment>
+	</ui:define>
+</ui:composition>

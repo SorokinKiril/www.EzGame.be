@@ -1,0 +1,112 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/ressources/templates/template.xhtml">
+	<ui:define name="head">
+		<title>#{i18n['classes']}</title>
+	</ui:define>
+	<ui:define name="content">
+		<div>
+			<h3 style="text-align: left;">#{i18n['classes']}</h3>
+		</div>
+		<p:separator />
+		<ui:fragment rendered="#{role ne 1}">
+			<h:outputText value="#{i18n['general.acces_denied']}" />
+		</ui:fragment>
+		<ui:fragment rendered="#{role eq 1}">
+			<p:growl id="message" autoUpdate="false" showDetail="true"
+				severity="info,error" />
+			<h:form id="form">
+				<p:dataTable
+					style="width: 80%; margin-left: auto; margin-right: auto; text-align:center"
+					var="classe" value="#{classeBean.listClasse}">
+					<f:facet name="header">
+						<h:outputText value="#{i18n['classe.list']}" />
+						<p:commandButton icon="fa fa-plus" type="button"
+							onclick="PF('dlg').show();" update="@form" />
+					</f:facet>
+
+					<p:column headerText="#{i18n['classe.name']}">
+						<h:outputText value="#{classe.classeName}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['classe.strength']}">
+						<h:outputText value="#{classe.classeStrength}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['classe.armor']}">
+						<h:outputText value="#{classe.classeArmor}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['classe.intelligence']}">
+						<h:outputText value="#{classe.classeIntelligence}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['classe.magic']}">
+						<h:outputText value="#{classe.classeMagic}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['classe.hitPoint']}">
+						<h:outputText value="#{classe.classeHitPoint}" />
+					</p:column>
+
+					<p:column>
+						<p:commandButton icon="fa fa-fw fa-edit"
+							update="@form:classeDetail" oncomplete="PF('dlg').show();">
+							<f:setPropertyActionListener value="#{classe}"
+								target="#{classeBean.classeEdit}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:dialog header="#{i18n['classe']}" widgetVar="dlg" dynamic="true"
+					closable="false" resizable="false" showEffect="fade"
+					hideEffect="fade">
+					<h:panelGroup id="classeDetail">
+						<p:messages autoUpdate="true" severity="warn" />
+						<h:panelGrid columns="2">
+							<h:outputLabel value="#{i18n['classe.name']}" />
+							<p:inputText value="#{classeBean.classeEdit.classeName}"
+								validator="ClasseValidator">
+							</p:inputText>
+						</h:panelGrid>
+
+						<hr />
+						<h:panelGrid columns="2">
+							<h:outputLabel value="#{i18n['classe.strength']}" />
+							<p:spinner value="#{classeBean.classeEdit.classeStrength}"
+								min="0" max="20" />
+							<h:outputLabel value="#{i18n['classe.armor']}" />
+							<p:spinner value="#{classeBean.classeEdit.classeArmor}" min="0"
+								max="20" />
+							<h:outputLabel value="#{i18n['classe.intelligence']}" />
+							<p:spinner value="#{classeBean.classeEdit.classeIntelligence}"
+								min="0" max="20" />
+							<h:outputLabel value="#{i18n['classe.magic']}" />
+							<p:spinner value="#{classeBean.classeEdit.classeMagic}" min="0"
+								max="20" />
+							<h:outputLabel value="#{i18n['classe.hitPoint']}" />
+							<p:spinner value="#{classeBean.classeEdit.classeHitPoint}"
+								min="70" max="150" />
+						</h:panelGrid>
+
+						<hr />
+						<h:panelGrid columns="2" style="width: 100%; text-align:center">
+							<p:commandButton value="#{i18n['general.submit']}"
+								icon="fa fa-check" actionListener="#{classeBean.submitClasse}"
+								oncomplete="if(!args.validationFailed){updateForm();}"
+								update="message">
+							</p:commandButton>
+							<p:commandButton value="#{i18n['general.cancel']}"
+								icon="fa fa-close" action="#{classeBean.submitCancel}"
+								oncomplete="PF('dlg').hide();" update="@form" process="@this" />
+						</h:panelGrid>
+						<p:remoteCommand name="updateForm" process="@this" update="@form" />
+					</h:panelGroup>
+				</p:dialog>
+			</h:form>
+		</ui:fragment>
+	</ui:define>
+</ui:composition>

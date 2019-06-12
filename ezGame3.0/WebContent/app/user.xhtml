@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/ressources/templates/template.xhtml">
+	<ui:define name="head">
+		<title>#{i18n['users']}</title>
+	</ui:define>
+	<ui:define name="content">
+		<div>
+			<h3 style="text-align: left;">#{i18n['users']}</h3>
+		</div>
+		<p:separator />
+		<ui:fragment rendered="#{role ne 1}">
+			<h:outputText value="#{i18n['general.acces_denied']}" />
+		</ui:fragment>
+		<ui:fragment rendered="#{role eq 1}">
+			<p:growl id="message" autoUpdate="false" showDetail="true"
+				severity="info,error" />
+			<h:form id="form">
+				<p:dataTable
+					style="width: 80%; margin-left: auto; margin-right: auto; text-align:center"
+					var="user" value="#{userBean.listUser}">
+					<f:facet name="header">
+						<h:outputText value="#{i18n['user.list']}" />
+					</f:facet>
+
+					<p:column width="10%" headerText="#{i18n['user.name']}">
+						<h:outputText value="#{user.userName}" />
+					</p:column>
+
+					<p:column width="10%" headerText="#{i18n['user.status']}">
+						<h:outputText rendered="#{user.userStatus eq 'false'}"
+							value="#{i18n['user.inactive']}" />
+						<h:outputText rendered="#{user.userStatus eq 'true'}"
+							value="#{i18n['user.active']}" />
+					</p:column>
+
+					<p:column width="10%" headerText="#{i18n['role.name']}">
+						<h:outputText value="#{user.role.roleName}" />
+					</p:column>
+
+					<p:column width="10%">
+						<p:commandButton icon="fa fa-fw fa-edit" update="@form:userDetail"
+							oncomplete="PF('dlg').show();">
+							<f:setPropertyActionListener value="#{user}"
+								target="#{userBean.userEdit}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:dialog id="userDetail" header="#{userBean.userEdit.userName}"
+					widgetVar="dlg" dynamic="true" closable="false" resizable="false"
+					showEffect="fade" hideEffect="fade">
+					<h:panelGroup>
+						<p:messages autoUpdate="true" />
+						<h:panelGrid columns="1">
+							<h:outputLabel value="#{i18n['role.name']}" />
+							<h:selectOneMenu id="roleSelect" converter="#{roleConverter}"
+								value="#{userBean.userEdit.role}">
+								<f:selectItems value="#{roleBean.listRole}" var="r"
+									itemValue="#{r}" itemLabel="#{r.roleName}" />
+							</h:selectOneMenu>
+							<br />
+							<p:selectBooleanButton value="#{userBean.userEdit.userStatus}"
+								onLabel="#{i18n['user.active']}"
+								offLabel="#{i18n['user.inactive']}" />
+						</h:panelGrid>
+						<hr />
+						<h:panelGrid columns="2" style="width: 100%; text-align:center">
+							<p:commandButton value="#{i18n['general.submit']}"
+								icon="fa fa-check" actionListener="#{userBean.submitUser}"
+								oncomplete="if(!args.validationFailed){updateForm();}"
+								update="message" />
+							<p:commandButton value="#{i18n['general.cancel']}"
+								icon="fa fa-close" action="#{achievementBean.submitCancel}"
+								oncomplete="PF('dlg').hide();" update="@form" process="@this" />
+						</h:panelGrid>
+						<p:remoteCommand name="updateForm" process="@this" update="@form" />
+					</h:panelGroup>
+				</p:dialog>
+			</h:form>
+		</ui:fragment>
+	</ui:define>
+</ui:composition>

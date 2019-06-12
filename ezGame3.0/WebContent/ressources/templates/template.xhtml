@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{i18nBean.locale}">
+	<h:head>
+
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta name="viewport"
+				content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+		</f:facet>
+		<ui:insert name="head" />
+	</h:head>
+
+	<h:body>
+
+		<p:layout id="pageLayout" fullPage="true" widgetVar="layoutWdgt">
+
+			<p:layoutUnit style="border-radius:0;" position="north" size="70"
+				collapsible="false" gutter="0">
+				<h:form>
+					<div style="height: auto; width: 100%;">
+						<div style="width: 44%; display: inline-block; float: left;">
+							<p:commandLink style="padding:25px;vertical-align: middle;"
+								onclick="PF('layoutWdgt').toggle('west');">
+								<i class="fa fa-bars" />
+							</p:commandLink>
+						</div>
+						<div style="display: inline-block; text-align: center;">
+							<p:commandLink action="./home.xhtml?faces-redirect=true">
+								<p:graphicImage style="height:50px; width:150px;"
+									url="/ressources/img/logo.png" />
+							</p:commandLink>
+						</div>
+						<div style="display: inline-block; float: right;">
+							<p:menuButton style="vertical-align: middle;"
+								rendered="#{username ne null}" value="#{username}">
+								<p:menuitem icon="fa fa-gear"
+									value="#{i18n['general.parameter']}"
+									action="./parameter.xhtml?faces-redirect=true" />
+								<p:menuitem icon="fa fa-sign-out"
+									value="#{i18n['general.logout']}" action="#{loginBean.logout}" />
+							</p:menuButton>
+							<p:commandLink value="#{i18n['general.log_in']}"
+								rendered="#{username eq null}"
+								action="/login.xhtml?faces-redirect=true" />
+							<br />
+							<p:commandLink value="#{i18n['general.subscribe']}"
+								rendered="#{username eq null}"
+								action="/user_new.xhtml?faces-redirect=true" />
+						</div>
+					</div>
+				</h:form>
+			</p:layoutUnit>
+
+			<p:layoutUnit style="border-radius:0; text-align:center;"
+				position="south" size="40" gutter="0">
+				<ui:include src="footer.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit style="border-radius:0; text-align:center;" gutter="0"
+				position="west" size="155" collapsible="true" collapseSize="0"
+				collapsed="true" effect="drop">
+				<ui:include src="topbar.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit
+				style="border-radius:0;padding-top: 0 !important; padding-right:  0 !important;
+				padding-bottom:  0 !important; padding-left:  0 !important;"
+				position="center" gutter="0">
+				<ui:insert name="content" />
+			</p:layoutUnit>
+
+			<p:layoutUnit
+				style="border-radius:0;padding-top: 0 !important; padding-right:  0 !important;
+				padding-bottom:  0 !important; padding-left:  0 !important"
+				position="east" gutter="0">
+			</p:layoutUnit>
+
+
+
+		</p:layout>
+
+	</h:body>
+</f:view>
+</html>

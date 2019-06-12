@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/dark-hive">
+
+	<div class="layout-topbar">
+		<ui:fragment rendered="#{role ne null}">
+			<div>
+				<p:link href="./home.xhtml"
+					value="#{i18n['general.home']}" />
+				<hr />
+				<ui:fragment rendered="#{role eq 3}">
+					<div>
+						<p:link href="./character_user.xhtml"
+							value="#{i18n['character.user']}" />
+						<hr />
+						<p:link href="./character_user_achievement.xhtml"
+							value="#{i18n['character.achievement_list']}" />
+						<hr />
+						<p:link href="./inventory.xhtml"
+							value="#{i18n['character.inventory']}" />
+						<hr />
+						<p:link href="./shop.xhtml" value="#{i18n['item.shop']}" />
+						<hr />
+						<p:link href="./leaderboard.xhtml"
+							value="#{i18n['character.leaderboard']}" />
+						<hr />
+					</div>
+				</ui:fragment>
+				<ui:fragment rendered="#{role eq 2}">
+					<div>
+
+						<p:link href="./character.xhtml" value="#{i18n['characters']}" />
+						<hr />
+					</div>
+				</ui:fragment>
+				<ui:fragment rendered="#{role eq 1}">
+					<div>
+						<p:link href="./achievement.xhtml" value="#{i18n['achievements']}" />
+						<hr />
+						<p:link href="./title.xhtml" value="#{i18n['titles']}" />
+						<hr />
+						<p:link href="./item.xhtml" value="#{i18n['items']}" />
+						<hr />
+						<p:link href="./race.xhtml" value="#{i18n['races']}" />
+						<hr />
+						<p:link href="./classe.xhtml" value="#{i18n['classes']}" />
+						<hr />
+						<p:link href="./secret_question.xhtml"
+							value="#{i18n['questions']}" />
+						<hr />
+						<p:link href="./user.xhtml" value="#{i18n['users']}" />
+						<hr />
+					</div>
+				</ui:fragment>
+			</div>
+		</ui:fragment>
+	</div>
+</ui:composition>

@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/ressources/templates/template.xhtml">
+	<ui:define name="head">
+		<title>#{i18n['character.achievement_list']}</title>
+	</ui:define>
+	<ui:define name="content">
+		<h3 style="display: inline-block; text-align: left;">#{i18n['character.achievement_list']}</h3>
+		<p:separator />
+		<ui:fragment rendered="#{role ne 3}">
+			<h:outputText value="#{i18n['general.acces_denied']}" />
+		</ui:fragment>
+		<ui:fragment rendered="#{role eq 3}">
+			<p:tabView>
+				<p:tab title="#{i18n['character.achievement_unlocked']}">
+					<p:dataTable
+						style="width: 80%; margin-left: auto; margin-right: auto; text-align:center"
+						var="achievementsUnlocked"
+						value="#{characterBean.characterSessionAchievements}">
+						<f:facet name="header">
+							<h:outputText value="#{i18n['character.achievement_unlocked']}" />
+						</f:facet>
+
+						<p:column width="15%" headerText="#{i18n['achievement.name']}">
+							<h:outputText
+								value="#{achievementsUnlocked.achievement.achievementName}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['achievement.description']}">
+							<h:outputText
+								value="#{achievementsUnlocked.achievement.achievementDescription}" />
+						</p:column>
+						<p:column width="15%" headerText="#{i18n['achievement.title']}">
+							<h:outputText
+								value="#{achievementsUnlocked.achievement.title.titleName}" />
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+				<p:tab title="#{i18n['character.achievement_locked']}">
+					<p:dataTable
+						style="width: 80%; margin-left: auto; margin-right: auto; text-align:center"
+						var="achievementsLocked"
+						value="#{characterBean.undoneCharacterAchievements}">
+						<f:facet name="header">
+							<h:outputText value="#{i18n['character.achievement_locked']}" />
+						</f:facet>
+
+						<p:column width="15%" headerText="#{i18n['achievement.name']}">
+							<h:outputText
+								value="#{achievementsLocked.achievementName}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['achievement.description']}">
+							<h:outputText
+								value="#{achievementsLocked.achievementDescription}" />
+						</p:column>
+						<p:column width="15%" headerText="#{i18n['achievement.title']}">
+							<h:outputText
+								value="#{achievementsLocked.title.titleName}" />
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+			</p:tabView>
+		</ui:fragment>
+	</ui:define>
+</ui:composition>

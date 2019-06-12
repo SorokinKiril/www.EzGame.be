@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/ressources/templates/template.xhtml">
+	<ui:define name="head">
+		<title>#{i18n['general.subscribe']}</title>
+	</ui:define>
+	<ui:define name="content">
+		<div>
+			<h3 style="text-align: left;">#{i18n['general.subscribe']}</h3>
+		</div>
+		<p:separator />
+		<p:growl id="message" autoUpdate="false" showDetail="true"
+			severity="info,error" />
+		<h:form id="form">
+
+			<p:wizard flowListener="#{userBean.onFlowProcess}"
+				style="width: 80%; margin-left: auto; margin-right: auto; text-align:center">
+				<p:tab title="#{i18n['user']}">
+					<p:panel header="#{i18n['user']}">
+
+						<p:messages autoUpdate="true" />
+						<h:panelGrid columns="2">
+
+							<h:outputLabel value="#{i18n['user.name']}" />
+							<p:inputText id="username" value="#{userBean.userEdit.userName}"
+								required="true" placeholder="ex:Bob" validator="userValidator" />
+
+							<h:outputLabel value="#{i18n['user.mail']}" />
+							<p:inputText id="mail" value="#{userBean.userEdit.userMail}"
+								required="true" placeholder="ex:mymail@gmail.com"
+								validator="mailValidator" />
+
+							<h:outputLabel value="#{i18n['user.password']}" />
+							<p:password value="#{userBean.userEdit.userPassword}"
+								required="true" match="passwordConfirm" />
+							<h:outputLabel value="#{i18n['user.password_confirmation']}" />
+							<p:password id="passwordConfirm"
+								value="#{userBean.userEdit.userPassword}" required="true" />
+
+							<h:outputLabel value="#{i18n['question.question']}" />
+							<h:selectOneMenu id="secretQuestionSelect"
+								converter="#{secretQuestionConverter}"
+								value="#{userBean.userEdit.secretQuestion}">
+								<f:selectItems value="#{secretQuestionBean.listQuestion}"
+									var="q" itemValue="#{q}" itemLabel="#{q.question}" />
+							</h:selectOneMenu>
+
+							<h:outputLabel value="#{i18n['question.answer']}" />
+							<p:inputText value="#{userBean.userEdit.userAnswer}"
+								required="true" />
+
+						</h:panelGrid>
+					</p:panel>
+
+				</p:tab>
+				<p:tab title="#{i18n['character']}">
+					<p:panel header="#{i18n['character']}">
+						<p:messages autoUpdate="true" />
+						<ui:include src="./app/character_form.xhtml" />
+					</p:panel>
+				</p:tab>
+
+				<p:tab id="confirm" title="#{i18n['general.confirmation']}">
+					<p:panel header="#{i18n['general.confirmation']}">
+						<h:panelGrid id="confirmation" columns="3"
+							columnClasses="grid,grid,grid">
+							<h:panelGrid columns="2" style="height: 300px;">
+								<h:outputText value="#{i18n['user.name']}" />
+								<h:outputText value="#{userBean.userEdit.userName}" />
+
+								<h:outputText value="#{i18n['user.mail']}" />
+								<h:outputText value="#{userBean.userEdit.userMail}" />
+
+								<h:outputText value="#{i18n['question.question']}" />
+								<h:outputText
+									value="#{userBean.userEdit.secretQuestion.question}" />
+
+								<h:outputText value="#{i18n['question.answer']}" />
+								<h:outputText value="#{userBean.userEdit.userAnswer}" />
+
+							</h:panelGrid>
+							<h:panelGrid columns="2" columnClasses="label, value"
+								style="height: 300px;">
+								<h:outputText value="#{i18n['character.name']}" />
+								<h:outputText
+									value="#{characterBean.characterNew.characterName}" />
+
+								<h:outputText value="#{i18n['character.gender']}" />
+								<h:outputText
+									rendered="#{ (characterBean.characterNew.characterGender) eq 'true' }"
+									value="#{i18n['character.male']}" />
+								<h:outputText
+									rendered="#{ (characterBean.characterNew.characterGender) eq 'false' }"
+									value="#{i18n['character.female']}" />
+
+								<h:outputText value="#{i18n['character.classe']}" />
+								<h:outputText
+									value="#{characterBean.characterNew.classe.classeName}" />
+
+								<h:outputText value="#{i18n['character.race']}" />
+								<h:outputText
+									value="#{characterBean.characterNew.race.raceName}" />
+							</h:panelGrid>
+							<h:panelGrid>
+								<h:outputText value="#{i18n['character.image']}" />
+								<p:graphicImage
+									value="#{characterBean.characterNew.characterImageLink}"
+									width="200px" height="300px" />
+							</h:panelGrid>
+
+						</h:panelGrid>
+
+						<p:commandButton style="margin-left: auto; margin-right: auto;"
+							id="submit" value="#{i18n['general.submit']}" icon="fa fa-check"
+							actionListener="#{userBean.createNewUser}" update="message"
+							process="@this" />
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+		</h:form>
+	</ui:define>
+</ui:composition>

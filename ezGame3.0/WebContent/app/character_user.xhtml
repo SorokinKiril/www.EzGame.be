@@ -1,0 +1,133 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/ressources/templates/template.xhtml">
+	<ui:define name="head">
+		<title>#{i18n['character.user']}</title>
+	</ui:define>
+	<ui:define name="content">
+		<h3 style="display: inline-block; text-align: left;">#{i18n['character.user']}</h3>
+		<p:separator />
+		<ui:fragment rendered="#{role ne 3}">
+			<h:outputText value="#{i18n['general.acces_denied']}" />
+		</ui:fragment>
+		<ui:fragment rendered="#{role eq 3}">
+			<div style="display: inline-block; float: right;">
+				<h:form>
+					<p:commandButton value="#{i18n['character.new']}"
+						icon="fa fa-fw fa-plus"
+						action="./character_new.xhtml?faces-redirect=true" />
+					<p:commandButton value="#{i18n['title.edit']}"
+						rendered="#{characterBean.characterSession.characterName ne null}"
+						icon="fa fa-fw fa-edit" onclick="PF('dlg').show();" />
+				</h:form>
+			</div>
+
+			<h:panelGrid columns="2" border="0"
+				style="text-align: center; width: 80%; margin: auto;">
+				<f:facet name="header">
+					<p:graphicImage width="200px" height="300px"
+						url="#{characterBean.characterSession.characterImageLink}" />
+				</f:facet>
+				<h:panelGrid columns="2" border="0"
+					style="text-align: center;margin: auto;">
+
+					<h:outputText value="#{i18n['character.name']}" />
+					<h:outputText
+						value="#{characterBean.characterSession.characterName}" />
+					<h:outputText value="#{i18n['character.title']}" />
+					<h:outputText
+						rendered="#{characterBean.characterSession.title eq 'null'}"
+						value="#{i18n['title.none']}" />
+					<h:outputText id="title"
+						rendered="#{characterBean.characterSession.title ne 'null'}"
+						value="#{characterBean.characterSession.title.titleName}" />
+
+					<h:outputText
+						rendered="#{characterBean.characterSession.characterName eq null}"
+						value=" " />
+
+					<h:outputText value="#{i18n['character.gender']}" />
+					<h:outputText
+						rendered="#{characterBean.characterSession.characterName eq null}"
+						value=" " />
+					<h:outputText
+						rendered="#{characterBean.characterSession.characterGender eq 'true'}"
+						value="#{i18n['character.male']}" />
+					<h:outputText
+						rendered="#{characterBean.characterSession.characterGender eq 'false'}"
+						value="#{i18n['character.female']}" />
+
+					<h:outputText value="#{i18n['classe.name']}" />
+					<h:outputText
+						value="#{characterBean.characterSession.classe.classeName}" />
+
+					<h:outputText value="#{i18n['race.name']}" />
+					<h:outputText
+						value="#{characterBean.characterSession.race.raceName}" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" border="0"
+					style="text-align: center;margin: auto;">
+					<h:outputText value="#{i18n['character.hitPoint']}" />
+					<h:outputText
+						value="#{characterBean.characterSession.characterHitPoint}/#{characterBean.characterSessionMaxHitPoint}" />
+
+					<h:outputText value="#{i18n['character.level']}" />
+					<h:outputText
+						value="#{characterBean.characterSession.characterLevel}" />
+
+					<h:outputText value="#{i18n['character.experience']}" />
+					<h:outputText
+						value="#{characterBean.characterSession.characterExperience}" />
+
+					<h:outputText value="#{i18n['classe.strength']}" />
+					<h:outputText value="#{characterBean.characterSessionStrength}" />
+
+					<h:outputText value="#{i18n['classe.armor']}" />
+					<h:outputText value="#{characterBean.characterSessionArmor}" />
+
+					<h:outputText value="#{i18n['classe.intelligence']}" />
+					<h:outputText value="#{characterBean.characterSessionIntelligence}" />
+
+					<h:outputText value="#{i18n['classe.magic']}" />
+					<h:outputText value="#{characterBean.characterSessionMagic}" />
+
+					<h:outputText value="#{i18n['character.gold']}" />
+					<h:outputText
+						value="#{characterBean.characterSession.characterGold}" />
+
+				</h:panelGrid>
+			</h:panelGrid>
+
+			<p:dialog header="#{i18n['title.your_titles']}" widgetVar="dlg"
+				dynamic="true" closable="false" resizable="false" showEffect="fade"
+				hideEffect="fade">
+				<h:form>
+					<h:panelGroup>
+						<h:selectOneMenu id="titleSelect" converter="#{titleConverter}"
+							value="#{characterBean.characterSession.title}">
+							<f:selectItem itemValue="#{null}"
+								itemLabel="#{i18n['general.select_one']}" />
+							<f:selectItems value="#{characterBean.titleUnlocked}" var="t"
+								itemValue="#{t}" itemLabel="#{t.titleName}" />
+						</h:selectOneMenu>
+						<hr />
+						<h:panelGrid columns="2" style="width: 100%; text-align:center">
+							<p:commandButton value="#{i18n['general.submit']}"
+								icon="fa fa-check"
+								actionListener="#{characterBean.updateCharacterTitle}"
+								oncomplete="PF('dlg').hide();" update="title" />
+
+							<p:commandButton value="#{i18n['general.cancel']}"
+								icon="fa fa-close" action="#{characterBean.submitCancel}"
+								oncomplete="PF('dlg').hide();" />
+						</h:panelGrid>
+					</h:panelGroup>
+				</h:form>
+			</p:dialog>
+		</ui:fragment>
+	</ui:define>
+</ui:composition>

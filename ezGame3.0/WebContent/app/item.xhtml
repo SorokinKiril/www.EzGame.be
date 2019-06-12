@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/ressources/templates/template.xhtml">
+	<ui:define name="head">
+		<title>#{i18n['items']}</title>
+	</ui:define>
+	<ui:define name="content">
+		<div>
+			<h3 style="text-align: left;">#{i18n['items']}</h3>
+		</div>
+		<p:separator />
+		<ui:fragment rendered="#{role ne 1}">
+			<h:outputText value="#{i18n['general.acces_denied']}" />
+		</ui:fragment>
+		<ui:fragment rendered="#{role eq 1}">
+			<p:growl id="message" autoUpdate="false" showDetail="true"
+				severity="info,error" />
+			<h:form id="form">
+				<p:dataTable
+					style="width: 80%; margin-left: auto; margin-right: auto; text-align:center"
+					var="item" value="#{itemBean.listItem}">
+					<f:facet name="header">
+						<h:outputText value="#{i18n['item.list']}" />
+						<p:commandButton icon="fa fa-plus" type="button"
+							onclick="PF('dlg').show();" update="@form" />
+					</f:facet>
+
+					<p:column width="10%" headerText="#{i18n['item.name']}">
+						<h:outputText value="#{item.itemName}" />
+					</p:column>
+
+					<p:column headerText="#{i18n['item.description']}">
+						<h:outputText value="#{item.itemDescription}" />
+					</p:column>
+
+					<p:column width="10%" headerText="#{i18n['item.type']}">
+						<h:outputText value="#{item.itemType.itemTypeName}" />
+					</p:column>
+
+					<p:column width="10%">
+						<p:commandButton icon="fa fa-fw fa-edit" update="@form:itemDetail"
+							oncomplete="PF('dlg').show();">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{itemBean.itemEdit}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:dialog header="#{i18n['item']}" widgetVar="dlg" dynamic="true"
+					closable="false" resizable="false" showEffect="fade"
+					hideEffect="fade">
+					<h:panelGroup id="itemDetail">
+						<p:messages autoUpdate="true" severity="warn" />
+						<h:panelGrid columns="2">
+							<h:outputLabel value="#{i18n['item.name']}" />
+							<p:inputText value="#{itemBean.itemEdit.itemName}"
+								validator="ItemValidator">
+							</p:inputText>
+							<h:outputLabel value="#{i18n['item.price']}" />
+							<p:spinner value="#{itemBean.itemEdit.itemPrice}" min="0"
+								max="1000" />
+							<h:outputLabel value="#{i18n['item.type']}" />
+							<h:selectOneMenu id="titleSelect"
+								converter="#{itemTypeConverter}"
+								value="#{itemBean.itemEdit.itemType}">
+								<f:selectItems value="#{itemTypeBean.listItemType}" var="t"
+									itemValue="#{t}" itemLabel="#{t.itemTypeName}" />
+							</h:selectOneMenu>
+						</h:panelGrid>
+						<br />
+						<h:panelGrid columns="1">
+							<h:outputLabel value="#{i18n['item.description']}" />
+							<p:inputTextarea rows="6" cols="50" counter="display"
+								maxlength="255" counterTemplate="{0} characters remaining."
+								autoResize="false" value="#{itemBean.itemEdit.itemDescription}"
+								validator="DescriptionValidator" />
+							<h:outputText id="display" />
+							<br />
+						</h:panelGrid>
+						<hr />
+						<h:panelGrid columns="2" style="width: 100%; text-align:center">
+							<p:commandButton value="#{i18n['general.submit']}"
+								icon="fa fa-check" actionListener="#{itemBean.submitItem}"
+								oncomplete="if(!args.validationFailed){updateForm();}"
+								update="message">
+							</p:commandButton>
+							<p:commandButton value="#{i18n['general.cancel']}"
+								icon="fa fa-close" action="#{itemBean.submitCancel}"
+								oncomplete="PF('dlg').hide();" update="@form" process="@this" />
+						</h:panelGrid>
+						<p:remoteCommand name="updateForm" process="@this" update="@form" />
+					</h:panelGroup>
+				</p:dialog>
+			</h:form>
+		</ui:fragment>
+	</ui:define>
+</ui:composition>
