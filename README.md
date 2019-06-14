@@ -10,7 +10,7 @@ Le tout en restant intuitif et simple à utiliser.
 Cette version a néanmoins été entièrement refaite afin d'inclure les derniers technologies que j'ai utilisés lors de mon travail de fin d'études. Il a été réalisé sur une période d'approximativement 3 mois.
 
 ## Technologies utilisées ##
--Eclipse proton
+- Eclipse proton
 - Tomcat 8.5
 - Java 8
 - Jsf 2.2
