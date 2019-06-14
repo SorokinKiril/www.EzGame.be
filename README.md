@@ -22,3 +22,15 @@ Cette version a néanmoins été entièrement refaite afin d'inclure les dernier
 -Primefaces 6.0
 
 -Shiro 1.3
+
+Identifiants( login, mot de passe )
+Adminitrateur
+-admin, admin
+
+Maitre de jeu
+-gm, gm
+
+joueurs
+-geralt, geralt
+-jenefer, jenefer
+-cirilla, cirilla
