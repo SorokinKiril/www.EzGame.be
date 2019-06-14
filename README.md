@@ -1,5 +1,6 @@
 # www.EzGame.be
 
+![alt text](https://github.com/SorokinKiril/www.EzGame.be/blob/master/ezGame3.0/WebContent/ressources/img/logo.png)
 ## Presentation du projet  ##
   Ce site a pour objectif de fournir un support numérique pour un jeu de rôles sur table (jdr) fictif.
 L'idée est de simplifier la gestion des différents aspects du jdr tant pour les joueurs que pour le maître du jeu.
@@ -10,35 +11,23 @@ Cette version a néanmoins été entièrement refaite afin d'inclure les dernier
 
 ## Technologies utilisées ##
 -Eclipse proton
-
--Tomcat 8.5
-
--Java 8
-
--Jsf 2.2
-
--Jpa 2.1
-
--Mysql 5.7
-
--Primefaces 6.0
-
--Shiro 1.3
+- Tomcat 8.5
+- Java 8
+- Jsf 2.2
+- Jpa 2.1
+- Mysql 5.7
+- Primefaces 6.0
+- Shiro 1.3
 
 ## Identifiants( login, mot de passe ) ##
 
 Adminitrateur
-
--admin, admin
+- admin, admin
 
 Maitre de jeu
-
--gm, gm
+- gm, gm
 
 joueurs
-
--geralt, geralt
-
--jenefer, jenefer
-
--cirilla, cirilla
+- geralt, geralt
+- jenefer, jenefer
+- cirilla, cirilla
