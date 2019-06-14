@@ -27,7 +27,7 @@ Adminitrateur
 Maitre de jeu
 - gm, gm
 
-joueurs
+Joueurs
 - geralt, geralt
 - jenefer, jenefer
 - cirilla, cirilla
