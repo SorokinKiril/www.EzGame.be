@@ -38,5 +38,7 @@ Maitre de jeu
 joueurs
 
 -geralt, geralt
+
 -jenefer, jenefer
+
 -cirilla, cirilla
