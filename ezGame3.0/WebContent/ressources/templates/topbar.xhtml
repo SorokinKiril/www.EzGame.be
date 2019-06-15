@@ -8,50 +8,95 @@
 	<div class="layout-topbar">
 		<ui:fragment rendered="#{role ne null}">
 			<div>
-				<p:link href="./home.xhtml"
-					value="#{i18n['general.home']}" />
+				<p:commandLink action="./home.xhtml?faces-redirect=true">
+					<i class="fa fa-home" />
+					<h:outputText value="#{i18n['general.home']}" />
+				</p:commandLink>
 				<hr />
 				<ui:fragment rendered="#{role eq 3}">
 					<div>
-						<p:link href="./character_user.xhtml"
-							value="#{i18n['character.user']}" />
+						<p:commandLink action="./character_user.xhtml?faces-redirect=true">
+							<i class="fa fa-user" />
+							<h:outputText value="#{i18n['character.user']}" />
+						</p:commandLink>
 						<hr />
-						<p:link href="./character_user_achievement.xhtml"
-							value="#{i18n['character.achievement_list']}" />
+						<p:commandLink
+							action="./character_user_achievement.xhtml?faces-redirect=true">
+							<i class="fa fa-trophy" />
+							<h:outputText value="#{i18n['character.achievement_list']}" />
+						</p:commandLink>
 						<hr />
-						<p:link href="./inventory.xhtml"
-							value="#{i18n['character.inventory']}" />
+						<p:commandLink action="./inventory.xhtml?faces-redirect=true">
+							<i class="fa fa-trophy" />
+							<h:outputText value="#{i18n['character.inventory']}" />
+						</p:commandLink>
 						<hr />
-						<p:link href="./shop.xhtml" value="#{i18n['item.shop']}" />
+						<p:commandLink action="./shop.xhtml?faces-redirect=true">
+							<i class="fa fa-btc" />
+							<h:outputText value="#{i18n['item.shop']}" />
+						</p:commandLink>
 						<hr />
-						<p:link href="./leaderboard.xhtml"
-							value="#{i18n['character.leaderboard']}" />
+						<p:commandLink action="./leaderboard.xhtml?faces-redirect=true">
+							<i class="fa fa-sort-numeric-asc" />
+							<h:outputText value="#{i18n['character.leaderboard']}" />
+						</p:commandLink>
 						<hr />
 					</div>
 				</ui:fragment>
 				<ui:fragment rendered="#{role eq 2}">
 					<div>
 
-						<p:link href="./character.xhtml" value="#{i18n['characters']}" />
+						<p:commandLink action="./character.xhtml?faces-redirect=true">
+							<i class="fa fa-users" />
+							<h:outputText value="#{i18n['characters']}" />
+						</p:commandLink>
 						<hr />
 					</div>
 				</ui:fragment>
 				<ui:fragment rendered="#{role eq 1}">
 					<div>
-						<p:link href="./achievement.xhtml" value="#{i18n['achievements']}" />
+
+						<p:commandLink action="./achievement.xhtml?faces-redirect=true">
+							<i class="fa fa-trophy" />
+							<h:outputText value="#{i18n['achievements']}" />
+						</p:commandLink>
 						<hr />
-						<p:link href="./title.xhtml" value="#{i18n['titles']}" />
+
+						<p:commandLink action="./title.xhtml?faces-redirect=true">
+							<i class="fa fa-star" />
+							<h:outputText value="#{i18n['titles']}" />
+						</p:commandLink>
 						<hr />
-						<p:link href="./item.xhtml" value="#{i18n['items']}" />
+
+						<p:commandLink action="./item.xhtml?faces-redirect=true">
+							<i class="fa fa-shield" />
+							<h:outputText value="#{i18n['items']}" />
+						</p:commandLink>
 						<hr />
-						<p:link href="./race.xhtml" value="#{i18n['races']}" />
+
+						<p:commandLink action="./race.xhtml?faces-redirect=true">
+							<i class="fa fa-paw" />
+							<h:outputText value="#{i18n['races']}" />
+						</p:commandLink>
 						<hr />
-						<p:link href="./classe.xhtml" value="#{i18n['classes']}" />
+						
+						<p:commandLink action="./classe.xhtml?faces-redirect=true">
+							<i class="fa fa-magic" />
+							<h:outputText value="#{i18n['classes']}" />
+						</p:commandLink>
 						<hr />
-						<p:link href="./secret_question.xhtml"
-							value="#{i18n['questions']}" />
+
+						<p:commandLink
+							action="./secret_question.xhtml?faces-redirect=true">
+							<i class="fa fa-question" />
+							<h:outputText value="#{i18n['questions']}" />
+						</p:commandLink>
 						<hr />
-						<p:link href="./user.xhtml" value="#{i18n['users']}" />
+
+						<p:commandLink action="./user.xhtml?faces-redirect=true">
+							<i class="fa fa-users" />
+							<h:outputText value="#{i18n['users']}" />
+						</p:commandLink>
 						<hr />
 					</div>
 				</ui:fragment>

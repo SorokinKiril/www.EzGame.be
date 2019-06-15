@@ -25,9 +25,10 @@
 				collapsible="false" gutter="0">
 				<h:form>
 					<div style="height: auto; width: 100%;">
-						<div style="width: 44%; display: inline-block; float: left;">
+						<div  style="width: 44%; display: inline-block; float: left;">
 							<p:commandLink style="padding:25px;vertical-align: middle;"
-								onclick="PF('layoutWdgt').toggle('west');">
+								onclick="PF('layoutWdgt').toggle('west');"
+								disabled="#{username eq null}" >
 								<i class="fa fa-bars" />
 							</p:commandLink>
 						</div>
